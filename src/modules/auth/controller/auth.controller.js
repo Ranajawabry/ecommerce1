@@ -8,23 +8,29 @@ import { customAlphabet } from "nanoid";
 
 export const signup= async(req,res,next)=>{
     
-   
+    
     const {userName,email,password}=req.body;
     
 
+   
     const user = await userModel.findOne({email})
    
     if(!user){
         const token = generateToken({email},process.env.EMAIL_TOKEN, 5*60 );// 5min
         
         const RefrehToken = generateToken({email},process.env.EMAIL_TOKEN, 60*60*24 );// oneDay
-    
+        
          const newUser = await userModel.create({userName,email, password :hash(password) });
+         
+
          const link =`${req.protocol}://${req.headers.host}/auth/confirmEmail/${token}`;
          const Rlink=`${req.protocol}://${req.headers.host}/auth/NewconfirmEmail/${RefrehToken}`;
          
          const html=`<a href="${link}">"Verify your email</a> <br> <br> <br> <a href=${Rlink}>send new email<a>`
-         sendEmail(email,'Verify your Email',html);
+         
+         await sendEmail(email,'Verify your Email',html);
+        
+
          return res.status(201).json({message:"done", newUser});
 
 
