@@ -1,8 +1,8 @@
 import { Roles } from "../../MiddleWare/auth.middleware.js";
 
 export const endPoints ={
-create : [Roles.Admin] ,
-update : [Roles.Admin],
+create : [Roles.User] ,
+update : [Roles.User],
 get : [Roles.Admin, Roles.User]
 
 
