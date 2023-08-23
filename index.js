@@ -10,7 +10,7 @@ import { sendEmail } from './src/services/sendEmail.js'
 const app = express()
 
 //app.set(`case sensitive routing`,true)
-await sendEmail('rana.a.jawabry@gmail.com','hii','welcome')
+
 initApp(express,app);
 
 
