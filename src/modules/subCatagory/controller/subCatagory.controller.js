@@ -28,7 +28,7 @@ export const creatSubCatagory = asyncHandler(async (req, res, next) => {
   }
   const{secure_url,public_id}= await cloudinary.uploader.upload(req.file.path,{folder:`${process.env.APP_NAME}/catagory`});
   const sluge = slugify(Name);
-  const subCatagory = await subCatagoryModel.create({ Name, sluge ,catagoryId , createdBy : req.user.id , updatedBy:req.user.id });
+  const subCatagory = await subCatagoryModel.create({ Name, sluge ,catagoryId , createdBy : req.user.id , updatedBy:req.user.id , image:{secure_url,public_id} });
 
   return res.status(201).json({ message: "success", subCatagory });
 });
@@ -59,7 +59,7 @@ export const updateSubCatagory = asyncHandler(async(req, res, next) => {
   if (req.file){
      const{secure_url,public_id}= await cloudinary.uploader.upload(req.file.path,{folder:`${process.env.APP_NAME}/catagory`});
      await cloudinary.uploader.destroy(catagory.image.id)
-   catagory.image ={secure_url,public_id}
+     subCatagory.image ={secure_url,public_id}
   }
   subCatagory.updatedBy= req.user.id
   await subCatagory.save()

@@ -31,7 +31,7 @@ export const creatCatagory = asyncHandler(async (req, res, next) => {
   }
   const{secure_url,public_id}= await cloudinary.uploader.upload(req.file.path,{folder:`${process.env.APP_NAME}/catagory`});
   const sluge = slugify(Name);
-  const catagory = await catagoryModel.create({ Name, sluge ,createdBy:req.user.id , updatedBy:req.user.id });
+  const catagory = await catagoryModel.create({ Name, sluge ,createdBy:req.user.id , updatedBy:req.user.id, image :{secure_url,public_id} });
 
   return res.status(201).json({ message: "success", catagory });
 });
